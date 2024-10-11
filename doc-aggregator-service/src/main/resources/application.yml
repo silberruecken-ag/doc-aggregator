@@ -1,0 +1,7 @@
+spring.application.name: doc-aggregator-service
+spring:
+  modulith:
+    republish-outstanding-events-on-restart: true
+  data:
+    mongodb:
+      auto-index-creation: true
