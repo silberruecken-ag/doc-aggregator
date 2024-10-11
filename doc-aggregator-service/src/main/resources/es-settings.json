@@ -1,0 +1,18 @@
+{
+  "analysis": {
+    "analyzer": {
+      "html_analyzer": {
+        "type": "custom",
+        "char_filter": [
+          "html_strip"
+        ],
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "stop",
+          "snowball"
+        ]
+      }
+    }
+  }
+}
