@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class DocumentationSectionService(private val sectionIndexRepository: SectionIndexRepository) {
-    fun findByQuery(query: String) = sectionIndexRepository.findByMarkupHtmlContainsOrderByMarkupElementDepthDesc(query)
+    fun findByQuery(query: String) = sectionIndexRepository.findByMarkupHtmlContainingOrderByMarkupElementDepthDesc(query)
 }
