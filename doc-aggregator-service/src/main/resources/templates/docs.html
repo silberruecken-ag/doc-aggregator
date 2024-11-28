@@ -1,0 +1,22 @@
+<html lang="en">
+<head>
+    <title>Sections</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<h1>Sections</h1>
+<form method="get" th:action="@{/docs}">
+    <!--/*@thymesVar id="query" type="java.lang.String"*/-->
+    <label for="query">Query: </label>
+    <input type="text" name="query" id="query" th:value="${query}">
+    <input type="submit" value="Search">
+</form>
+<ul>
+    <!--/*@thymesVar id="docs" type="java.util.List"*/-->
+    <li th:each="doc : ${docs}">
+        <!--/*@thymesVar id="doc" type="ch.silberruecken.das.section.DocumentationWithSection"*/-->
+        <a th:href="${doc.uri}" th:text="${doc.title}"></a>
+    </li>
+</ul>
+</body>
+</html>

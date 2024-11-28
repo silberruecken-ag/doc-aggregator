@@ -10,8 +10,14 @@
         "filter": [
           "lowercase",
           "stop",
-          "snowball"
+          "snowBallEnglish"
         ]
+      }
+    },
+    "filter": {
+      "snowBallEnglish": {
+        "type": "snowball",
+        "language": "English"
       }
     }
   }

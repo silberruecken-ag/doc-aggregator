@@ -19,4 +19,6 @@ enum class DocumentationType { API, ARCHITECTURE }
 enum class DocumentationAccess { PUBLIC, PROTECTED }
 
 @JvmInline
-value class DocumentationId(val id: String)
+value class DocumentationId(val id: String) {
+    override fun toString() = id
+}

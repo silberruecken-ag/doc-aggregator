@@ -3,8 +3,7 @@ package ch.silberruecken.das.documentation.mongodb
 import ch.silberruecken.das.documentation.Documentation
 import org.springframework.data.mongodb.repository.MongoRepository
 import java.net.URI
-import java.util.*
 
-interface DocumentationRepository : MongoRepository<Documentation, UUID> {
+interface DocumentationRepository : MongoRepository<Documentation, String> {
     fun findByUri(uri: URI): Documentation?
 }
