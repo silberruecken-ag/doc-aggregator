@@ -6,6 +6,9 @@ import co.elastic.clients.elasticsearch._types.SortOrder
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate
 import org.springframework.data.elasticsearch.client.elc.NativeQuery
 import org.springframework.data.elasticsearch.core.SearchHits
+import org.springframework.data.elasticsearch.core.query.HighlightQuery
+import org.springframework.data.elasticsearch.core.query.highlight.Highlight
+import org.springframework.data.elasticsearch.core.query.highlight.HighlightField
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 
 
@@ -14,18 +17,20 @@ interface SectionIndexRepository : ElasticsearchRepository<DocumentationSection,
 }
 
 interface CustomSectionRepository {
-    fun findByMarkupHtmlContainingOrderByMarkupElementDepthDesc(searchTerm: String): SearchHits<DocumentationSection>
+    fun findByMarkupTextContainingOrderByMarkupElementDepthDesc(searchTerm: String): SearchHits<DocumentationSection>
 }
 
 class CustomSectionRepositoryImpl(private val elasticsearchTemplate: ElasticsearchTemplate) : CustomSectionRepository {
-    override fun findByMarkupHtmlContainingOrderByMarkupElementDepthDesc(searchTerm: String): SearchHits<DocumentationSection> {
+    private val searchField = "markup.text"
+
+    override fun findByMarkupTextContainingOrderByMarkupElementDepthDesc(searchTerm: String): SearchHits<DocumentationSection> {
         val query = NativeQuery.builder()
             .withQuery { q ->
                 q.nested { n ->
                     n.path("markup")
                         .query { innerQ ->
                             innerQ.match { m ->
-                                m.field("markup.html").query(searchTerm)
+                                m.field(searchField).query(searchTerm)
                             }
                         }
                 }
@@ -39,6 +44,16 @@ class CustomSectionRepositoryImpl(private val elasticsearchTemplate: Elasticsear
                         }
                 }
             }
+            .withHighlightQuery(
+                HighlightQuery(
+                    Highlight(
+                        listOf(
+                            HighlightField(searchField)
+                        )
+                    ),
+                    String::class.java
+                )
+            )
             .build()
 
         return elasticsearchTemplate.search(query, DocumentationSection::class.java)

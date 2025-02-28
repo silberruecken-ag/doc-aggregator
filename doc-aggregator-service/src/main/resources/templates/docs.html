@@ -16,6 +16,7 @@
     <li th:each="doc : ${docs}">
         <!--/*@thymesVar id="doc" type="ch.silberruecken.das.section.DocumentationWithSection"*/-->
         <a th:href="${doc.uri}" th:text="${doc.title}"></a>
+        <p th:utext="${doc.summary}"></p>
     </li>
 </ul>
 </body>

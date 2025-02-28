@@ -27,5 +27,5 @@ class DocumentationSectionDomainService(private val restClient: RestClient, priv
     }
 
     private fun Document.toSections(documentationId: DocumentationId) = HtmlParser.sectionsByIds(body())
-        .map { DocumentationSection(null, documentationId, SectionMarkup(it.elementId, it.depth, it.element.html())) }
+        .map { DocumentationSection(null, documentationId, SectionMarkup(it.elementId, it.depth, it.element.text())) }
 }

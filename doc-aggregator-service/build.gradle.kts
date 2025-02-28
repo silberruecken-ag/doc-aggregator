@@ -56,7 +56,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // Custom dependencies
-    implementation("org.jsoup:jsoup:1.18.1")
+    implementation("org.jsoup:jsoup:1.18.3")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("org.wiremock.integrations:wiremock-spring-boot:3.0.1")
     testImplementation("org.htmlunit:htmlunit")
