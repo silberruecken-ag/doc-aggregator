@@ -28,8 +28,8 @@ class DocumentationSectionServiceTest(
             <h2>Title 2</h2>
           </div>"""
     private val heading = """<div id="heading">
-          <h1>Title</h1>
-          <p>Text</p>
+          <h1>The running dogs quickly jumped over the lazy fox.</h1>
+          <p>Die laufenden Hunde sprangen schnell über den faulen Fuchs.</p>
           $heading2
         </div>"""
     private val body = """
@@ -53,10 +53,16 @@ class DocumentationSectionServiceTest(
 
     @Test
     fun `should find indexed sections`() {
-        val result = testee.findByQuery("text")
+        val result = testee.findByQuery("quick and jumping")
         assertThat(result.totalHits).isEqualTo(2)
         assertThat(result.getSearchHit(0).content.markup.elementId).isEqualTo("heading")
         assertThat(result.getSearchHit(1).content.markup.elementId).isNull()
+    }
+
+    @Test
+    fun `should not find any documents`() {
+        val result = testee.findByQuery("dirty and big ball of mud")
+        assertThat(result.totalHits).isEqualTo(0)
     }
 
     @Test
@@ -74,7 +80,7 @@ class DocumentationSectionServiceTest(
             on { service } doReturn title
         }
         whenever(documentationService.findById(documentationId)) doReturn doc
-        val result = testee.findDocsByQuery("text")
+        val result = testee.findDocsByQuery("springen und faul")
         assertThat(result).hasSize(1)
         assertThat(result[0].getUri().toString()).isEqualTo("$baseUri#heading")
         assertThat(result[0].getTitle()).isEqualTo(title)

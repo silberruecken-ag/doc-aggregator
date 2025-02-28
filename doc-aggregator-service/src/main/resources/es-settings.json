@@ -9,8 +9,10 @@
         "tokenizer": "standard",
         "filter": [
           "lowercase",
-          "stop",
-          "snowBallEnglish"
+          "stopEnglish",
+          "stopGerman",
+          "snowBallEnglish",
+          "snowBallGerman"
         ]
       }
     },
@@ -18,6 +20,18 @@
       "snowBallEnglish": {
         "type": "snowball",
         "language": "English"
+      },
+      "snowBallGerman": {
+        "type": "snowball",
+        "language": "German"
+      },
+      "stopEnglish": {
+        "type": "stop",
+        "stopwords": "_english_"
+      },
+      "stopGerman": {
+        "type": "stop",
+        "stopwords": "_german_"
       }
     }
   }
