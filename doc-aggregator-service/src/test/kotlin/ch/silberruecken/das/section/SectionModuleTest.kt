@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.modulith.test.ApplicationModuleTest
 import org.springframework.modulith.test.Scenario
 import org.springframework.test.context.TestConstructor
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.wiremock.spring.ConfigureWireMock
 import org.wiremock.spring.EnableWireMock
 import org.wiremock.spring.InjectWireMock
@@ -22,7 +23,7 @@ import java.net.URI
 @Import(TestcontainersConfiguration::class)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @EnableWireMock(ConfigureWireMock())
-class SectionModuleTest(private val sectionIndexRepository: SectionIndexRepository) {
+class SectionModuleTest(private val sectionIndexRepository: SectionIndexRepository, @MockitoBean private val documentationService: DocumentationService) {
     private val documentationId = DocumentationId("1")
 
     @InjectWireMock
