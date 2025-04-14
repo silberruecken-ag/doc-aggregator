@@ -1,8 +1,8 @@
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
-	id("org.springframework.boot") version "3.4.3"
-	id("io.spring.dependency-management") version "1.1.7"
+    id("org.springframework.boot") version "3.4.3"
+    id("io.spring.dependency-management") version "1.1.7"
 }
 
 group = "ch.silberruecken"
@@ -60,6 +60,12 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("org.wiremock.integrations:wiremock-spring-boot:3.0.1")
     testImplementation("org.htmlunit:htmlunit")
+
+    // Cucumber
+    testImplementation("io.cucumber:cucumber-java:7.22.0")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.22.0")
+    testImplementation("io.cucumber:cucumber-spring:7.22.0")
+    testImplementation("org.junit.platform:junit-platform-suite")
 }
 
 dependencyManagement {
