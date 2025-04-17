@@ -1,8 +1,8 @@
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
-	id("org.springframework.boot") version "3.4.3"
-	id("io.spring.dependency-management") version "1.1.7"
+    id("org.springframework.boot") version "3.4.3"
+    id("io.spring.dependency-management") version "1.1.7"
 }
 
 group = "ch.silberruecken"
@@ -60,6 +60,11 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("org.wiremock.integrations:wiremock-spring-boot:3.0.1")
     testImplementation("org.htmlunit:htmlunit")
+
+    // WebJars dependencies
+    implementation("org.webjars:bootstrap:5.3.5")
+    implementation("org.webjars.npm:bootstrap-icons:1.11.3")
+    implementation("org.webjars:webjars-locator-lite")
 }
 
 dependencyManagement {
