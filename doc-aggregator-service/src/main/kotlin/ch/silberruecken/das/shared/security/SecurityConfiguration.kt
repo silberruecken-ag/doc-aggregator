@@ -18,7 +18,6 @@ class SecurityConfiguration {
             authorizeHttpRequests {
                 authorize(anyRequest, permitAll) // TODO: Add security later
             }
-            csrf { disable() } // TODO: Enable csrf for form posts
         }
         return http.build()
     }

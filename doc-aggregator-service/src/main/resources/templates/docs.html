@@ -9,6 +9,7 @@
     <!--/*@thymesVar id="query" type="java.lang.String"*/-->
     <label for="query">Query: </label>
     <input type="text" name="query" id="query" th:value="${query}">
+    <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}">
     <input type="submit" value="Search">
 </form>
 <ul>
