@@ -15,7 +15,7 @@ class SecurityConfiguration {
     @Bean
     fun httpSecurity(http: HttpSecurity): SecurityFilterChain {
         http {
-            authorizeRequests {
+            authorizeHttpRequests {
                 authorize(anyRequest, permitAll) // TODO: Add security later
             }
             csrf { disable() } // TODO: Enable csrf for form posts
