@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
-    id("org.springframework.boot") version "3.4.3"
+    id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -62,9 +62,9 @@ dependencies {
     testImplementation("org.htmlunit:htmlunit")
 
     // WebJars dependencies
-    implementation("org.webjars:bootstrap:5.3.5")
-    implementation("org.webjars.npm:bootstrap-icons:1.11.3")
-    implementation("org.webjars:webjars-locator-lite")
+    runtimeOnly("org.webjars:bootstrap:5.3.5")
+    runtimeOnly("org.webjars.npm:bootstrap-icons:1.11.3")
+    runtimeOnly("org.webjars:webjars-locator-lite")
 }
 
 dependencyManagement {
