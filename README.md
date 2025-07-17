@@ -1,1 +1,1 @@
-[![Gradle Build](https://github.com/huberchrigu/doc-aggregator/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/huberchrigu/doc-aggregator/actions/workflows/gradle-build.yml)
+[![Gradle Build](https://github.com/silberruecken-ag/doc-aggregator/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/silberruecken-ag/doc-aggregator/actions/workflows/gradle-build.yml)
