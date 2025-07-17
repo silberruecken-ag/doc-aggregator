@@ -1,7 +1,3 @@
-plugins {
-    id("org.springframework.boot") version "3.4.4"
-}
-
 extra["springModulithVersion"] = "1.3.3"
 
 dependencies {
@@ -19,19 +15,18 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.modulith:spring-modulith-starter-mongodb")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    testImplementation("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.springframework.modulith:spring-modulith-actuator")
     runtimeOnly("org.springframework.modulith:spring-modulith-observability")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // Testing
+    testImplementation("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.modulith:spring-modulith-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.testcontainers:elasticsearch")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:mongodb")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // Custom dependencies
     implementation("org.jsoup:jsoup:1.18.3")
@@ -50,4 +45,5 @@ dependencyManagement {
         mavenBom("org.springframework.modulith:spring-modulith-bom:${property("springModulithVersion")}")
     }
 }
+
 tasks.register("prepareKotlinBuildScriptModel") {}
