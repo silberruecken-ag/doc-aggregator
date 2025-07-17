@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.modulith.test.ApplicationModuleTest
 import org.springframework.modulith.test.AssertablePublishedEvents
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.post
 @Import(TestcontainersConfiguration.MongoDbContainerConfiguration::class)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @AutoConfigureMockMvc
+@ActiveProfiles("debug-security")
 class DocumentationModuleTest(private val mvc: MockMvc) {
     private val uri = "https://my-service.io/docs/index.html"
     private val service = "my-service"
@@ -31,6 +34,7 @@ class DocumentationModuleTest(private val mvc: MockMvc) {
                 "service": "$service"
                 }
             """.trimIndent()
+            with(csrf())
         }.andExpect {
             status { isCreated() }
             header { exists("Location") }

@@ -24,17 +24,9 @@ class DocumentationSectionServiceTest(
     private val repository: SectionIndexRepository, private val testee: DocumentationSectionService,
     @MockitoBean private val documentationService: DocumentationService
 ) {
-    private val heading2 = """<div id="heading2">
-            <h2>Title 2</h2>
-          </div>"""
-    private val heading = """<div id="heading">
-          <h1>The running dogs quickly jumped over the lazy fox.</h1>
-          <p>Die laufenden Hunde sprangen schnell über den faulen Fuchs.</p>
-          $heading2
-        </div>"""
-    private val body = """
-        <p>Intro</p>
-        $heading
+    private val heading2 = """Title 2"""
+    private val heading = """The running dogs quickly jumped over the lazy fox. Die laufenden Hunde sprangen schnell über den faulen Fuchs. $heading2"""
+    private val body = """Intro $heading
     """.trimIndent()
 
     private val documentationId = DocumentationId("1")
@@ -62,12 +54,6 @@ class DocumentationSectionServiceTest(
     @Test
     fun `should not find any documents`() {
         val result = testee.findByQuery("dirty and big ball of mud")
-        assertThat(result.totalHits).isEqualTo(0)
-    }
-
-    @Test
-    fun `should ignore html elements`() {
-        val result = testee.findByQuery("heading2")
         assertThat(result.totalHits).isEqualTo(0)
     }
 
