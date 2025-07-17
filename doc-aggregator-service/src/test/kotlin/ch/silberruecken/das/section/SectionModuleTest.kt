@@ -60,6 +60,6 @@ class SectionModuleTest(private val sectionIndexRepository: SectionIndexReposito
         scenario.publish(DocumentationUpdated(documentation))
             .andWaitForStateChange { sectionIndexRepository.count() > 1 }
 
-        assertThat(sectionIndexRepository.count()).isEqualTo(2)
+        assertThat(sectionIndexRepository.count()).isEqualTo(4)
     }
 }
