@@ -14,9 +14,10 @@ on:
 
 jobs:
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read       # Default, allows checkout
+      checks: write       # Required for the test-reporter action to post a summary
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
