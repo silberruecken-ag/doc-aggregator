@@ -51,6 +51,7 @@ class SectionModuleTest(private val sectionIndexRepository: SectionIndexReposito
 
     @BeforeEach
     fun initElasticsearchData() {
+        sectionIndexRepository.deleteAll()
         sectionIndexRepository.save(DocumentationSection(null, documentationId, SectionMarkup(null, 0, "Hello World")))
     }
 
