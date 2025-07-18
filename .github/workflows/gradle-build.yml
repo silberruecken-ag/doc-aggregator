@@ -29,3 +29,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
         run: ./gradlew build
+      - name: Publish Test Report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Gradle Test Results
+          path: '**/build/test-results/test/*.xml'
+          reporter: java-junit
