@@ -23,6 +23,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    implementation(project(":doc-aggregator-autoconfigure"))
 
     // Testing
     testImplementation("org.springframework.boot:spring-boot-devtools")
