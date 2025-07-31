@@ -34,6 +34,9 @@ dependencies {
     testImplementation("org.wiremock.integrations:wiremock-spring-boot:3.0.1")
     testImplementation("org.htmlunit:htmlunit")
 
+    // Spring Boot Testjars
+    testImplementation("org.springframework.experimental.boot:spring-boot-testjars:0.0.5")
+
     compileOnly("org.springframework.boot:spring-boot-starter")
     compileOnly("org.springframework:spring-web")
 }
