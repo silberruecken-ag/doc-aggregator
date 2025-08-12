@@ -33,6 +33,7 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("org.wiremock.integrations:wiremock-spring-boot:3.0.1")
     testImplementation("org.htmlunit:htmlunit")
+    testImplementation("tech.chrigu.spring:spring-template-editor:0.0.1-SNAPSHOT")
 
     // WebJars dependencies
     runtimeOnly("org.webjars:bootstrap:5.3.5")
