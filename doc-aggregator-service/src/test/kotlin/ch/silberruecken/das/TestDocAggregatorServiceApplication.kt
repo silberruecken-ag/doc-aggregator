@@ -6,7 +6,8 @@ import tech.chrigu.spring.templateeditor.TemplateEditorConfiguration
 
 fun main(args: Array<String>) {
     fromApplication<DocAggregatorServiceApplication>()
+        .withAdditionalProfiles("testdata")
         .with(TestcontainersConfiguration::class)
-        .with(TemplateEditorConfiguration::class)
+        .with(TemplateEditorConfiguration::class).withAdditionalProfiles("template-editor")
         .run(*args)
 }
