@@ -1,5 +1,6 @@
 package ch.silberruecken.das.documentation.web
 
+import ch.silberruecken.das.documentation.Documentation
 import ch.silberruecken.das.documentation.DocumentationService
 import ch.silberruecken.das.documentation.web.DocumentationRestController.Companion.REQUEST_MAPPING
 import jakarta.validation.Valid
@@ -14,7 +15,7 @@ import java.net.URI
 @RequestMapping(REQUEST_MAPPING)
 class DocumentationRestController(private val documentationService: DocumentationService) {
     @PostMapping
-    fun createOrUpdateDocumentation(@Valid @RequestBody documentation: CreateDocumentationDto) = documentationService.createOrUpdateDocumentation(documentation.toDomain())
+    fun createOrUpdateDocumentation(@Valid @RequestBody documentation: CreateDocumentationDto): ResponseEntity<Documentation> = documentationService.createOrUpdateDocumentation(documentation.toDomain())
         .let { ResponseEntity.created(URI("$REQUEST_MAPPING/${it.id}")).body(it) }
 
     companion object {
