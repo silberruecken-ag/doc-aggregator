@@ -45,10 +45,10 @@ class DocAggregatorAutoConfigurationTest {
             val restClientBuilder = RestClient.builder()
 
             mockServer = MockRestServiceServer.bindTo(restClientBuilder).build()
-            mockServer.expect(requestTo("/documentations"))
+            mockServer.expect(requestTo("http://localhost:8080/documentations"))
                 .andExpect(jsonPath("type").value("API"))
                 .andExpect(jsonPath("service").value("test-service"))
-                .andExpect(jsonPath("uri").value("http://localhost:8080/docs/index.html"))
+                .andExpect(jsonPath("uri").value("/docs/index.html"))
                 .andRespond(withSuccess())
             return restClientBuilder
         }
