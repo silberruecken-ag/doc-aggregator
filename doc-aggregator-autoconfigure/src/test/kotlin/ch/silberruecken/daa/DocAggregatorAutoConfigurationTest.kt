@@ -1,14 +1,16 @@
 package ch.silberruecken.daa
 
 import ch.silberruecken.daa.client.DocAggregatorClient
-import ch.silberruecken.daa.updater.DocumentationUpdater
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean
+import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.AutoConfigurations
 import org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
+import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.boot.logging.LogLevel
 import org.springframework.boot.test.context.runner.ApplicationContextRunner
+import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.web.client.MockRestServiceServer
@@ -16,6 +18,7 @@ import org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPat
 import org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
 import org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess
 import org.springframework.web.client.RestClient
+import java.time.Duration
 
 class DocAggregatorAutoConfigurationTest {
 
@@ -28,8 +31,13 @@ class DocAggregatorAutoConfigurationTest {
             .withPropertyValues("spring.application.name=test-service")
             .run { context ->
 
-                // Don't send ApplicationReadyEvent, simply trigger function directly.
-                context.getBean<DocumentationUpdater>().onApplicationReady()
+                val applicationReadyEvent = ApplicationReadyEvent(
+                    SpringApplication(DocAggregatorAutoConfigurationTest::class.java),
+                    emptyArray(),
+                    context as ConfigurableApplicationContext,
+                    Duration.ofMillis(500L)
+                )
+                context.publishEvent(applicationReadyEvent)
 
                 assertThat(context).hasSingleBean(DocAggregatorClient::class.java)
                 context.getBean<UserConfiguration>().mockServer.verify() // TODO: This fails because the application ready event was probably not fired
