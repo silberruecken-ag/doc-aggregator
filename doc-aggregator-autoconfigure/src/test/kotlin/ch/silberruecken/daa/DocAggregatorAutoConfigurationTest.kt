@@ -1,6 +1,7 @@
 package ch.silberruecken.daa
 
 import ch.silberruecken.daa.client.DocAggregatorClient
+import ch.silberruecken.daa.updater.DocumentationUpdater
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean
@@ -22,9 +23,14 @@ class DocAggregatorAutoConfigurationTest {
     fun `should send documentation location to documents aggregator service`() {
         val contextRunner = ApplicationContextRunner().withConfiguration(AutoConfigurations.of(DocAggregatorAutoConfiguration::class.java))
             .withInitializer(ConditionEvaluationReportLoggingListener.forLogLevel(LogLevel.INFO))
+
         contextRunner.withUserConfiguration(UserConfiguration::class.java)
             .withPropertyValues("spring.application.name=test-service")
             .run { context ->
+
+                // Don't send ApplicationReadyEvent, simply trigger function directly.
+                context.getBean<DocumentationUpdater>().onApplicationReady()
+
                 assertThat(context).hasSingleBean(DocAggregatorClient::class.java)
                 context.getBean<UserConfiguration>().mockServer.verify() // TODO: This fails because the application ready event was probably not fired
             }
