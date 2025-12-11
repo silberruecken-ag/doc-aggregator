@@ -18,9 +18,8 @@ data class CreateDocumentationDto(
 ) {
     fun toDomain(request: HttpServletRequest): Documentation {
         val host = request.getHeader(HttpHeaders.HOST) ?: throw IllegalStateException("Could not find required header HOST")
-        val uriWithHost = UriComponentsBuilder.fromUri(uri!!)
-            .scheme(getScheme(host))
-            .host(host)
+        val uriWithHost = UriComponentsBuilder.fromUriString(getScheme(host) + "://" + host)
+            .path(uri.toString())
             .build()
             .toUri()
         return Documentation(null, type!!, service!!, uriWithHost, DocumentationAccess.PUBLIC, version)

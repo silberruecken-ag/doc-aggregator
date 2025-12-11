@@ -8,7 +8,7 @@ import java.net.URI
 
 class DocAggregatorRestClient(private val restClient: RestClient, private val applicationName: String) : DocAggregatorClient {
     override fun updateDocumentation(documentation: Documentation) {
-        restClient.put().uri("/documentations") // TODO: Share uri and body in shared module
+        restClient.put().uri("/api/documentations") // TODO: Share uri and body in shared module
             .body(CreateDocumentationDto.fromDomain(documentation, applicationName))
             .contentType(APPLICATION_JSON)
             .retrieve()

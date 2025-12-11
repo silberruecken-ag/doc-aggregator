@@ -2,6 +2,8 @@ package ch.silberruecken.das.shared.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -13,7 +15,20 @@ import org.springframework.security.web.SecurityFilterChain
 @EnableMethodSecurity
 class SecurityConfiguration {
     @Bean
-    fun httpSecurity(http: HttpSecurity): SecurityFilterChain {
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    fun apiSecurity(http: HttpSecurity): SecurityFilterChain {
+        http {
+            securityMatcher("/api/**")
+            authorizeHttpRequests {
+                authorize(anyRequest, permitAll) // TODO: Add security later
+            }
+            csrf { disable() }
+        }
+        return http.build()
+    }
+
+    @Bean
+    fun mvcSecurity(http: HttpSecurity): SecurityFilterChain {
         http {
             authorizeHttpRequests {
                 authorize(anyRequest, permitAll) // TODO: Add security later

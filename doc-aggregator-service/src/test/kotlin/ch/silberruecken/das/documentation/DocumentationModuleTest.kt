@@ -27,7 +27,7 @@ class DocumentationModuleTest(private val mvc: MockMvc) {
 
     @Test
     fun `should persist documentation and trigger indexing`(events: AssertablePublishedEvents) {
-        mvc.put("/documentations") {
+        mvc.put("/api/documentations") {
             header("HOST", host)
             contentType = MediaType.APPLICATION_JSON
             content = """

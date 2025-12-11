@@ -22,6 +22,6 @@ class DocumentationRestController(private val documentationService: Documentatio
     }
 
     companion object {
-        const val REQUEST_MAPPING = "/documentations"
+        const val REQUEST_MAPPING = "/api/documentations"
     }
 }
