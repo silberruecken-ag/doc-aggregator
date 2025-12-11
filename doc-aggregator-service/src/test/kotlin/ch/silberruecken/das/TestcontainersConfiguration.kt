@@ -21,6 +21,7 @@ class TestcontainersConfiguration {
             return ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:9.2.0")
                 .withEnv("xpack.security.enabled", "false")
                 .withEnv("ES_JAVA_OPTS", "-Xms256m -Xmx512m -XX:MaxDirectMemorySize=536870912")
+                .withEnv("discovery.type", "single-node")
         }
     }
 

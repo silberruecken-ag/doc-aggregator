@@ -29,5 +29,5 @@ data class CreateDocumentationDto(
      * We always assume https unless for localhost.
      * // TODO: This should be overrideable in the auto-configuration.
      */
-    private fun getScheme(host: String) = if (host == "localhost") "http" else "https"
+    private fun getScheme(host: String) = if (host.startsWith("localhost")) "http" else "https"
 }
