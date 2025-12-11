@@ -14,7 +14,7 @@ class DocumentationUpdater(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @EventListener(ApplicationReadyEvent::class)
-    fun onApplicationReady() {
+    fun onApplicationReady() { // TODO: Should not lead to application failure
         logger.info("Update documentation...")
         docAggregatorProperties.documentations.forEach { updateDocumentation(it) }
     }

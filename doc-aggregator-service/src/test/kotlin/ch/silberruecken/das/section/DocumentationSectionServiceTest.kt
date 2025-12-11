@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
-import org.springframework.boot.test.autoconfigure.data.elasticsearch.DataElasticsearchTest
+import org.springframework.boot.data.elasticsearch.test.autoconfigure.DataElasticsearchTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.context.bean.override.mockito.MockitoBean

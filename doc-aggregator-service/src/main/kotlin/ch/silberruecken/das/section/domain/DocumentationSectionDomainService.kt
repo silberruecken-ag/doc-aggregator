@@ -8,6 +8,7 @@ import ch.silberruecken.das.section.elasticsearch.SectionIndexRepository
 import ch.silberruecken.das.section.html.HtmlParser
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.slf4j.LoggerFactory
 import org.springframework.modulith.events.ApplicationModuleListener
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClient
@@ -15,10 +16,13 @@ import org.springframework.web.client.body
 
 @Service
 class DocumentationSectionDomainService(private val restClient: RestClient, private val sectionIndexRepository: SectionIndexRepository) {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     @ApplicationModuleListener
     fun updateSections(event: DocumentationUpdated) {
         val documentation = event.documentation
         require(documentation.id != null) { "Sections can only be updated for persisted documentations" }
+        logger.info("Documentation ${documentation.uri} has changed or is new. Index is updated...")
         val html = restClient.get().uri(documentation.uri).retrieve().body<String>() ?: ""
         val document = Jsoup.parse(html)
         val sections = document.toSections(documentation.id)

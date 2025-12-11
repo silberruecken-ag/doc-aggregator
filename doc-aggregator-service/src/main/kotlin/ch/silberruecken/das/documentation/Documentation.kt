@@ -23,10 +23,9 @@ data class Documentation(
     fun createOrUpdate(documentationRepository: DocumentationRepository, eventPublisher: ApplicationEventPublisher): Documentation {
         val old = documentationRepository.findByUri(uri)
         if (old?.version != null && old.version == version) {
-            logger.info("Documentation $uri already indexed for version ${version.value}. Skipping update.")
+            logger.info("Documentation $uri is already indexed for version ${version.value}. Skipping update.")
             return this
         }
-        logger.info("Documentation $uri has changed or is new. Trigger index update.")
         val update = old?.copy(version = version) ?: this
         val doc = documentationRepository.save(update)
         eventPublisher.publishEvent(DocumentationUpdated(doc))

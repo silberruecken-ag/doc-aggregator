@@ -6,6 +6,7 @@ dependencies {
 
     testImplementation("org.springframework:spring-web")
     testImplementation("org.springframework.boot:spring-boot-starter-json")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.withType<BootJar> {

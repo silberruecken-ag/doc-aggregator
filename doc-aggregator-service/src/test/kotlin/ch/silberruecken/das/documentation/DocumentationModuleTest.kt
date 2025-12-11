@@ -3,7 +3,7 @@ package ch.silberruecken.das.documentation
 import ch.silberruecken.das.TestcontainersConfiguration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.modulith.test.ApplicationModuleTest
@@ -28,7 +28,7 @@ class DocumentationModuleTest(private val mvc: MockMvc) {
     @Test
     fun `should persist documentation and trigger indexing`(events: AssertablePublishedEvents) {
         mvc.put("/api/documentations") {
-            header("HOST", host)
+            header("HOST", host) // TODO: Not needed anymore
             contentType = MediaType.APPLICATION_JSON
             content = """
                 {
