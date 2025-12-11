@@ -12,7 +12,7 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
 
 @ApplicationModuleTest
 @Import(TestcontainersConfiguration.MongoDbContainerConfiguration::class)
@@ -20,16 +20,19 @@ import org.springframework.test.web.servlet.post
 @AutoConfigureMockMvc
 @ActiveProfiles("debug-security")
 class DocumentationModuleTest(private val mvc: MockMvc) {
-    private val uri = "https://my-service.io/docs/index.html"
+    private val host = "my-service.io"
+    private val documentationPath = "/docs/index.html"
+    private val uri = "https://$host$documentationPath"
     private val service = "my-service"
 
     @Test
     fun `should persist documentation and trigger indexing`(events: AssertablePublishedEvents) {
-        mvc.post("/documentations") {
+        mvc.put("/documentations") {
+            header("HOST", host)
             contentType = MediaType.APPLICATION_JSON
             content = """
                 {
-                "uri": "$uri",
+                "uri": "$documentationPath",
                 "type": "API",
                 "service": "$service"
                 }
@@ -39,7 +42,6 @@ class DocumentationModuleTest(private val mvc: MockMvc) {
             status { isCreated() }
             header { exists("Location") }
             jsonPath("id") { isNotEmpty() }
-            jsonPath("uri") { value(uri) }
             jsonPath("uri") { value(uri) }
             jsonPath("type") { value("API") }
             jsonPath("service") { value(service) }

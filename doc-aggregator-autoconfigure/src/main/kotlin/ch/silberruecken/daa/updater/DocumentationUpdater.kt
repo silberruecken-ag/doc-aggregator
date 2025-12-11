@@ -20,9 +20,7 @@ class DocumentationUpdater(
     }
 
     private fun updateDocumentation(documentation: Documentation) {
-        if (documentation.version == null || documentation.version.needsUpdate()) {
-            docAggregatorClient.updateDocumentation(documentation)
-            logger.info("Documentation $documentation updated")
-        }
+        docAggregatorClient.updateDocumentation(documentation)
+        logger.info("Documentation $documentation updated")
     }
 }

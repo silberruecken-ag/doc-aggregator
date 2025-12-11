@@ -57,7 +57,7 @@ class SectionModuleTest(private val sectionIndexRepository: SectionIndexReposito
 
     @Test
     fun `should re-index changed documentation`(scenario: Scenario) {
-        val documentation = Documentation(documentationId, DocumentationType.API, "my-service", URI(wiremock.url("/docs")), DocumentationAccess.PUBLIC)
+        val documentation = Documentation(documentationId, DocumentationType.API, "my-service", URI(wiremock.url("/docs")), DocumentationAccess.PUBLIC, null)
         scenario.publish(DocumentationUpdated(documentation))
             .andWaitForStateChange { sectionIndexRepository.count() > 1 }
 

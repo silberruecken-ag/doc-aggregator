@@ -18,14 +18,24 @@ class DocumentationSectionTestDataGenerator(private val documentationService: Do
 
     override fun run(args: ApplicationArguments) {
         logger.info("Init test data...")
-        documentationService.createOrUpdateDocumentation(Documentation(null, DocumentationType.API, "silberruecken", URI("https://silberruecken.ch"), DocumentationAccess.PUBLIC))
+        documentationService.createOrUpdateDocumentation(
+            Documentation(
+                null,
+                DocumentationType.API,
+                "silberruecken",
+                URI("https://silberruecken.ch"),
+                DocumentationAccess.PUBLIC,
+                null
+            )
+        )
         documentationService.createOrUpdateDocumentation(
             Documentation(
                 null,
                 DocumentationType.API,
                 "spring",
                 URI("https://docs.spring.io/spring-framework/reference/overview.html"),
-                DocumentationAccess.PUBLIC
+                DocumentationAccess.PUBLIC,
+                null
             )
         )
         logger.info("Test data initialized")
