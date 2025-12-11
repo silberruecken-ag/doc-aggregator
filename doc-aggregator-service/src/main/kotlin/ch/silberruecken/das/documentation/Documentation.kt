@@ -2,7 +2,6 @@ package ch.silberruecken.das.documentation
 
 import ch.silberruecken.das.documentation.mongodb.DocumentationRepository
 import org.slf4j.LoggerFactory
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.annotation.Transient
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
@@ -20,7 +19,7 @@ data class Documentation(
     @Transient
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    fun createOrUpdate(documentationRepository: DocumentationRepository, eventPublisher: ApplicationEventPublisher): Documentation {
+    fun createOrUpdate(documentationRepository: DocumentationRepository): Documentation {
         val old = documentationRepository.findByUri(uri)
         if (old?.version != null && old.version == version) {
             logger.info("Documentation $uri already indexed for version ${version.value}. Skipping update.")
@@ -28,9 +27,7 @@ data class Documentation(
         }
         logger.info("Documentation $uri has changed or is new. Trigger index update.")
         val update = old?.copy(version = version) ?: this
-        val doc = documentationRepository.save(update)
-        eventPublisher.publishEvent(DocumentationUpdated(doc))
-        return doc
+        return documentationRepository.save(update)
     }
 }
 
