@@ -11,6 +11,7 @@ class DocAggregatorRestClient(private val restClient: RestClient, private val ap
             .body(CreateDocumentationDto.fromDomain(documentation, applicationName))
             .contentType(APPLICATION_JSON)
             .retrieve()
+            .toBodilessEntity()
     }
 }
 
