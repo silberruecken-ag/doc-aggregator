@@ -25,7 +25,7 @@ class DocAggregatorAutoConfiguration {
         docAggregatorProperties: DocAggregatorProperties,
         environment: Environment
     ): DocAggregatorClient {
-        val restClient = restClientBuilder.baseUrl(docAggregatorProperties.serviceUrl).build()
+        val restClient = restClientBuilder.baseUrl(docAggregatorProperties.docAggregatorUrl).build()
         return DocAggregatorRestClient(
             restClient,
             environment.getProperty("spring.application.name") ?: throw IllegalArgumentException("doc-aggregator requires the spring.application.name property to be set")

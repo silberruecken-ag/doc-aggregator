@@ -4,30 +4,19 @@ import ch.silberruecken.das.documentation.Documentation
 import ch.silberruecken.das.documentation.DocumentationAccess
 import ch.silberruecken.das.documentation.DocumentationType
 import ch.silberruecken.das.documentation.Version
-import jakarta.servlet.http.HttpServletRequest
 import org.jetbrains.annotations.NotNull
-import org.springframework.http.HttpHeaders
-import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
+/**
+ * @param uri Must be a complete uri, as the service cannot guest the origin's hostname.
+ */
 data class CreateDocumentationDto(
     @field:NotNull val type: DocumentationType?,
     @field:NotNull val service: String?,
     @field:NotNull val uri: URI?,
     private val version: Version?
 ) {
-    fun toDomain(request: HttpServletRequest): Documentation {
-        val host = request.getHeader(HttpHeaders.HOST) ?: throw IllegalStateException("Could not find required header HOST") // TODO: This is the target, not the origin -> provide the url in the client
-        val uriWithHost = UriComponentsBuilder.fromUriString(getScheme(host) + "://" + host)
-            .path(uri.toString())
-            .build()
-            .toUri()
-        return Documentation(null, type!!, service!!, uriWithHost, DocumentationAccess.PUBLIC, version)
+    fun toDomain(): Documentation {
+        return Documentation(null, type!!, service!!, uri!!, DocumentationAccess.PUBLIC, version)
     }
-
-    /**
-     * We always assume https unless for localhost.
-     * // TODO: This should be overrideable in the auto-configuration.
-     */
-    private fun getScheme(host: String) = if (host.startsWith("localhost")) "http" else "https"
 }
