@@ -14,9 +14,7 @@ class DocumentationService(
 ) {
     @Transactional
     fun createOrUpdateDocumentation(documentation: Documentation): Documentation {
-        val doc = documentation.createOrUpdate(documentationRepository)
-        eventPublisher.publishEvent(DocumentationUpdated(doc))
-        return doc
+        return documentation.createOrUpdate(documentationRepository, eventPublisher)
     }
 
     fun findById(id: DocumentationId) = documentationRepository.findByIdOrNull(id.toString())
