@@ -3,6 +3,7 @@ package ch.silberruecken.das.documentation.web
 import ch.silberruecken.das.documentation.Documentation
 import ch.silberruecken.das.documentation.DocumentationService
 import ch.silberruecken.das.documentation.web.DocumentationRestController.Companion.REQUEST_MAPPING
+import ch.silberruecken.dashared.client.DocAggregatorServiceApi
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PutMapping
@@ -21,6 +22,6 @@ class DocumentationRestController(private val documentationService: Documentatio
     }
 
     companion object {
-        const val REQUEST_MAPPING = "/api/documentations"
+        const val REQUEST_MAPPING = DocAggregatorServiceApi.DOCUMENTATION_URL
     }
 }
