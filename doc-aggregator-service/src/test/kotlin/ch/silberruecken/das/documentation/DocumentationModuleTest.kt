@@ -20,9 +20,7 @@ import org.springframework.test.web.servlet.put
 @AutoConfigureMockMvc
 @ActiveProfiles("debug-security")
 class DocumentationModuleTest(private val mvc: MockMvc) {
-    private val host = "my-service.io"
-    private val documentationPath = "/docs/index.html"
-    private val uri = "https://$host$documentationPath"
+    private val uri = "https://my-service.io/docs/index.html"
     private val service = "my-service"
 
     @Test
@@ -31,7 +29,7 @@ class DocumentationModuleTest(private val mvc: MockMvc) {
             contentType = MediaType.APPLICATION_JSON
             content = """
                 {
-                "uri": "$documentationPath",
+                "uri": "$uri",
                 "type": "API",
                 "service": "$service"
                 }

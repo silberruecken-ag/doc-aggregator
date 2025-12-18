@@ -56,5 +56,3 @@ dependencyManagement {
         mavenBom("org.springframework.modulith:spring-modulith-bom:${property("springModulithVersion")}")
     }
 }
-
-tasks.register("prepareKotlinBuildScriptModel") {}

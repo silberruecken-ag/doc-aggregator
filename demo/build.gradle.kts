@@ -9,5 +9,3 @@ dependencies {
     // Project dependency
     implementation(project(":doc-aggregator-autoconfigure"))
 }
-
-tasks.register("prepareKotlinBuildScriptModel") {}
