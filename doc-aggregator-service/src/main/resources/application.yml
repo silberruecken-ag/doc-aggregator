@@ -14,3 +14,13 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9000
+      client:
+        provider:
+          auth:
+            issuer-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}
+        registration:
+          auth:
+            provider: auth
+            client-id: das
+            client-secret: das
+            scope: openid, profile

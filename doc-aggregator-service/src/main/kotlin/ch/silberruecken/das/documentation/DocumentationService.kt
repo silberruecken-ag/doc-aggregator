@@ -19,6 +19,11 @@ class DocumentationService(
         return documentation.createOrUpdate(documentationRepository, eventPublisher)
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    fun findAll(): List<Documentation> {
+        return documentationRepository.findAll()
+    }
+
     // TODO: Security
     fun findById(id: DocumentationId) = documentationRepository.findByIdOrNull(id.toString())
 }

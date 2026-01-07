@@ -8,10 +8,6 @@ logging:
 
 spring:
   security:
-    user: # TODO: Add admin user (for das dashboard)
-      name: user
-      password: user
-      roles: USER
     oauth2:
       authorizationserver:
         client:
@@ -26,7 +22,7 @@ spring:
                 - "refresh_token"
                 - "client_credentials"
               redirect-uris:
-                - "http://127.0.0.1:8080/login/oauth2/code/demo-auth-server"
+                - "http://127.0.0.1:8080/login/oauth2/code/auth"
               post-logout-redirect-uris:
                 - "http://127.0.0.1:8080/"
               scopes:
@@ -43,10 +39,6 @@ spring:
               authorization-grant-types:
                 - "client_credentials"
                 - "refresh_token"
-              redirect-uris:
-                - "http://127.0.0.1:8081/login/oauth2/code/demo-auth-server"
-              post-logout-redirect-uris:
-                - "http://127.0.0.1:8081/"
               scopes:
                 - "das.documentations.write"
           demo-protected:
@@ -60,7 +52,7 @@ spring:
                 - "refresh_token"
                 - "client_credentials"
               redirect-uris:
-                - "http://127.0.0.1:8082/login/oauth2/code/demo-auth-server"
+                - "http://127.0.0.1:8082/login/oauth2/code/auth"
               post-logout-redirect-uris:
                 - "http://127.0.0.1:8082/"
               scopes:

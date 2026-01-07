@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-@RequestMapping("/docs")
+@RequestMapping(DocumentationSectionController.REQUEST_MAPPING)
 class DocumentationSectionController(private val documentationSectionService: DocumentationSectionService) {
     @GetMapping
     fun searchDocs(@RequestParam query: String?): ModelAndView {
@@ -23,5 +23,9 @@ class DocumentationSectionController(private val documentationSectionService: Do
                 "query" to query
             )
         )
+    }
+
+    companion object {
+        const val REQUEST_MAPPING = "/docs"
     }
 }

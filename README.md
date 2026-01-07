@@ -11,8 +11,10 @@
 
 # Running the Doc Aggregator Service
 
-* Configure a [Spring property](https://docs.spring.io/spring-boot/reference/features/external-config.html) `spring.security.oauth2.resourceserver.jwt.issuer-uri` that points to
-  your authorization server (IAM).
+* Configure the following [Spring properties](https://docs.spring.io/spring-boot/reference/features/external-config.html):
+    * `spring.security.oauth2.resourceserver.jwt.issuer-uri`: The isser uri of your authorization server (IAM).
+    * `spring.security.oauth2.client.registration.auth.client-id` and `spring.security.oauth2.client.registration.auth.client-secret`: The client ID and client secret of your
+      authorization server's configuration for the Doc Aggregator service.
 
 ## Connecting to the Doc Aggregator Service
 
