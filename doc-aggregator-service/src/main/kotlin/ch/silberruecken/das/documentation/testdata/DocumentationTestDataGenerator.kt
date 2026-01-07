@@ -4,6 +4,8 @@ import ch.silberruecken.das.documentation.Documentation
 import ch.silberruecken.das.documentation.DocumentationAccess
 import ch.silberruecken.das.documentation.DocumentationService
 import ch.silberruecken.das.documentation.DocumentationType
+import ch.silberruecken.das.shared.security.constants.Scopes
+import ch.silberruecken.das.shared.security.utils.InternalAuthentication
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
@@ -18,26 +20,28 @@ class DocumentationSectionTestDataGenerator(private val documentationService: Do
 
     override fun run(args: ApplicationArguments) {
         logger.info("Init test data...")
-        documentationService.createOrUpdateDocumentation(
-            Documentation(
-                null,
-                DocumentationType.API,
-                "silberruecken",
-                URI("https://silberruecken.ch"),
-                DocumentationAccess.PUBLIC,
-                null
+            InternalAuthentication.runWithScope(Scopes.DOCUMENTATIONS_WRITE) {
+            documentationService.createOrUpdateDocumentation(
+                Documentation(
+                    null,
+                    DocumentationType.API,
+                    "silberruecken",
+                    URI("https://silberruecken.ch"),
+                    DocumentationAccess.PUBLIC,
+                    null
+                )
             )
-        )
-        documentationService.createOrUpdateDocumentation(
-            Documentation(
-                null,
-                DocumentationType.API,
-                "spring",
-                URI("https://docs.spring.io/spring-framework/reference/overview.html"),
-                DocumentationAccess.PUBLIC,
-                null
+            documentationService.createOrUpdateDocumentation(
+                Documentation(
+                    null,
+                    DocumentationType.API,
+                    "spring",
+                    URI("https://docs.spring.io/spring-framework/reference/overview.html"),
+                    DocumentationAccess.PUBLIC,
+                    null
+                )
             )
-        )
-        logger.info("Test data initialized")
+            logger.info("Test data initialized")
+        }
     }
 }

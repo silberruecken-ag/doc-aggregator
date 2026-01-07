@@ -1,0 +1,70 @@
+server:
+  port: 9000
+
+logging:
+  level:
+    org.springframework.security: TRACE
+    org.springframework.web: DEBUG
+
+spring:
+  security:
+    user: # TODO: Add admin user (for das dashboard)
+      name: user
+      password: user
+      roles: USER
+    oauth2:
+      authorizationserver:
+        client:
+          das:
+            registration:
+              client-id: "das"
+              client-secret: "{noop}das"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+                - "client_credentials"
+              redirect-uris:
+                - "http://127.0.0.1:8080/login/oauth2/code/demo-auth-server"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8080/"
+              scopes:
+                - "openid"
+                - "profile"
+                - "demo-protected.read"
+            require-authorization-consent: true
+          demo-public:
+            registration:
+              client-id: "demo-public"
+              client-secret: "{noop}demo-public"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "client_credentials"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:8081/login/oauth2/code/demo-auth-server"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8081/"
+              scopes:
+                - "das.documentations.write"
+          demo-protected:
+            registration:
+              client-id: "demo-protected"
+              client-secret: "{noop}demo-protected"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+                - "client_credentials"
+              redirect-uris:
+                - "http://127.0.0.1:8082/login/oauth2/code/demo-auth-server"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8082/"
+              scopes:
+                - "openid"
+                - "profile"
+                - "das.documentations.write"
+            require-authorization-consent: true

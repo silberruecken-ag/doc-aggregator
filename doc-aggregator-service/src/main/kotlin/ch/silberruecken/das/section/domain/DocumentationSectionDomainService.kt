@@ -23,7 +23,7 @@ class DocumentationSectionDomainService(private val restClient: RestClient, priv
         val documentation = event.documentation
         require(documentation.id != null) { "Sections can only be updated for persisted documentations" }
         logger.info("Documentation ${documentation.uri} has changed or is new. Index is updated...")
-        val html = restClient.get().uri(documentation.uri).retrieve().body<String>() ?: ""
+        val html = restClient.get().uri(documentation.uri).retrieve().body<String>() ?: "" // TODO: Client security (for protected documentation)
         val document = Jsoup.parse(html)
         val sections = document.toSections(documentation.id)
         sectionIndexRepository.deleteByDocumentationId(documentation.id)

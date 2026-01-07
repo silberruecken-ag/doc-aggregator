@@ -1,0 +1,22 @@
+spring:
+  application.name: demo
+  security:
+    oauth2:
+      client:
+        registration:
+          das:
+            client-id: demo-public
+            client-secret: demo-public
+            client-authentication-method: client_secret_basic
+            scope:
+              - das.documentations.write
+            authorization-grant-type: client_credentials
+            provider: demo-auth-servier
+        provider:
+          demo-auth-servier:
+            issuer-uri: http://localhost:9000
+server.port: 8081
+logging.level:
+  org.springframework.boot.autoconfigure: DEBUG
+  org.springframework.security: DEBUG
+  org.springframework.web: DEBUG

@@ -9,3 +9,8 @@ spring:
   mongodb:
     representation:
       uuid: standard
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000 # TODO: Document how to override and how to setup the productive IAM (which scopes the clients need etc.)

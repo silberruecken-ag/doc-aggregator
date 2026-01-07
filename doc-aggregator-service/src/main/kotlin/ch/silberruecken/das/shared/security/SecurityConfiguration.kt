@@ -1,5 +1,7 @@
 package ch.silberruecken.das.shared.security
 
+import ch.silberruecken.das.shared.security.constants.Scopes
+import ch.silberruecken.dashared.client.DocAggregatorServiceApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.Ordered
@@ -20,7 +22,11 @@ class SecurityConfiguration {
         http {
             securityMatcher("/api/**")
             authorizeHttpRequests {
-                authorize(anyRequest, permitAll) // TODO: Add security later
+                authorize(DocAggregatorServiceApi.DOCUMENTATION_URL, hasAuthority(Scopes.DOCUMENTATIONS_WRITE))
+                authorize(anyRequest, denyAll)
+            }
+            oauth2ResourceServer {
+                jwt {}
             }
             csrf { disable() }
         }
@@ -31,7 +37,7 @@ class SecurityConfiguration {
     fun mvcSecurity(http: HttpSecurity): SecurityFilterChain {
         http {
             authorizeHttpRequests {
-                authorize(anyRequest, permitAll) // TODO: Add security later
+                authorize(anyRequest, permitAll) // TODO: Add security later (server security)
             }
         }
         return http.build()

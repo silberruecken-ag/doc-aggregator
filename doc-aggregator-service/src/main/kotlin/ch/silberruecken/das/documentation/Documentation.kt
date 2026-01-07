@@ -33,8 +33,8 @@ data class Documentation(
     }
 }
 
-enum class DocumentationType { API, ARCHITECTURE }
-enum class DocumentationAccess { PUBLIC, PROTECTED }
+enum class DocumentationType { API, ARCHITECTURE } // TODO: List registered documentations with type, make them removable
+enum class DocumentationAccess { PUBLIC, PROTECTED } // TODO: Handle protected documentation (client security)
 
 @JvmInline
 value class DocumentationId(val id: String) {

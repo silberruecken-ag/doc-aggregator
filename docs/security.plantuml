@@ -1,0 +1,14 @@
+@startuml
+component "doc-aggregator-service" as das
+component "Secured Documentation" as secured #FFAAAA
+component "Public Documentation" as public
+
+das --> secured #red : search (if logged in)
+das --> public : search
+
+das --> secured #red : index (requires client credentials)
+das --> public : index
+
+secured --> das #red : register (requires client credentials)
+public --> das #red : register (requires client credentials)
+@enduml

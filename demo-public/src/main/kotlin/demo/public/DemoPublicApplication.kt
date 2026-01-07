@@ -1,11 +1,11 @@
-package demo
+package demo.public
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DemoApplication
+class PublicDemoApplication // TODO: Protected documentation (2nd service), Auth Server (IAM)
 
 fun main(args: Array<String>) {
-    runApplication<DemoApplication>(*args)
+    runApplication<PublicDemoApplication>(*args)
 }
