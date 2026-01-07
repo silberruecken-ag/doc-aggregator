@@ -11,9 +11,9 @@ spring:
             scope:
               - das.documentations.write
             authorization-grant-type: client_credentials
-            provider: demo-auth-servier
+            provider: demo-auth-server
         provider:
-          demo-auth-servier:
+          demo-auth-server:
             issuer-uri: http://localhost:9000
 server.port: 8081
 logging.level:

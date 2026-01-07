@@ -10,7 +10,7 @@ import java.net.URI
 
 class DocAggregatorRestClient(private val restClient: RestClient, private val applicationName: String) : DocAggregatorClient {
     override fun updateDocumentation(documentation: Documentation) {
-        restClient.put().uri(DocAggregatorServiceApi.DOCUMENTATION_URL) // TODO: Document das configuration (required by each client)
+        restClient.put().uri(DocAggregatorServiceApi.DOCUMENTATION_URL)
             .attributes(clientRegistrationId("das"))
             .body(CreateDocumentationDto.fromDomain(documentation, applicationName))
             .contentType(APPLICATION_JSON)
