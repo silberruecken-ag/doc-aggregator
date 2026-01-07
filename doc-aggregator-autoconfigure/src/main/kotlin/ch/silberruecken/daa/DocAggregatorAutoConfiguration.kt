@@ -5,6 +5,7 @@ import ch.silberruecken.daa.client.DocAggregatorProperties
 import ch.silberruecken.daa.client.DocAggregatorRestClient
 import ch.silberruecken.daa.updater.DocumentationUpdater
 import org.springframework.boot.autoconfigure.AutoConfiguration
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
@@ -23,6 +24,7 @@ import org.springframework.web.client.RestClient
 @ConditionalOnProperty(prefix = "doc-aggregator", name = ["enabled"], havingValue = "true", matchIfMissing = true)
 @ConditionalOnClass(RestClient::class, OAuth2AuthorizedClientManager::class)
 class DocAggregatorAutoConfiguration {
+    @ConditionalOnBean(AuthorizedClientServiceOAuth2AuthorizedClientManager::class)
     @ConditionalOnMissingBean
     @Bean
     fun docAggregatorClient(
@@ -41,6 +43,7 @@ class DocAggregatorAutoConfiguration {
         )
     }
 
+    @ConditionalOnBean(ClientRegistrationRepository::class, OAuth2AuthorizedClientService::class)
     @ConditionalOnMissingBean
     @Bean
     fun authorizedClientServiceOAuth2AuthorizedClientManager(clientRegistrationRepository: ClientRegistrationRepository, authorizedClientService: OAuth2AuthorizedClientService) =

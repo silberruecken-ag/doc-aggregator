@@ -5,15 +5,19 @@ import ch.silberruecken.daa.DocAggregatorAutoConfigurationTest.UserConfiguration
 import ch.silberruecken.daa.client.DocAggregatorClient
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.mock
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.AutoConfigurations
 import org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.boot.logging.LogLevel
+import org.springframework.boot.test.context.assertj.AssertableApplicationContext
 import org.springframework.boot.test.context.runner.ApplicationContextRunner
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager
 import org.springframework.test.web.client.MockRestServiceServer
 import org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath
 import org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
@@ -25,8 +29,7 @@ class DocAggregatorAutoConfigurationTest {
 
     @Test
     fun `should send documentation location to documents aggregator service`() {
-        val contextRunner = ApplicationContextRunner().withConfiguration(AutoConfigurations.of(DocAggregatorAutoConfiguration::class.java))
-            .withInitializer(ConditionEvaluationReportLoggingListener.forLogLevel(LogLevel.INFO))
+        val contextRunner = withContextRunner()
 
         contextRunner.withUserConfiguration(UserConfiguration::class.java)
             .withPropertyValues(
@@ -36,13 +39,7 @@ class DocAggregatorAutoConfigurationTest {
             .run { context ->
                 mockRequest("http://localhost:8080", "https://test-service.io/docs/index.html")
 
-                val applicationReadyEvent = ApplicationReadyEvent(
-                    SpringApplication(DocAggregatorAutoConfigurationTest::class.java),
-                    emptyArray(),
-                    context as ConfigurableApplicationContext,
-                    Duration.ofMillis(500L)
-                )
-                context.publishEvent(applicationReadyEvent)
+                publishEvent(context)
 
                 assertThat(context).hasSingleBean(DocAggregatorClient::class.java)
                 mockServer.verify()
@@ -51,8 +48,7 @@ class DocAggregatorAutoConfigurationTest {
 
     @Test
     fun `should send external documentation`() {
-        val contextRunner = ApplicationContextRunner().withConfiguration(AutoConfigurations.of(DocAggregatorAutoConfiguration::class.java))
-            .withInitializer(ConditionEvaluationReportLoggingListener.forLogLevel(LogLevel.INFO))
+        val contextRunner = withContextRunner()
 
         contextRunner.withUserConfiguration(UserConfiguration::class.java)
             .withPropertyValues(
@@ -64,18 +60,26 @@ class DocAggregatorAutoConfigurationTest {
             .run { context ->
                 mockRequest("https://doc-aggregator.io", "https://my-documentation.io", "1.1-SNAPSHOT")
 
-                val applicationReadyEvent = ApplicationReadyEvent(
-                    SpringApplication(DocAggregatorAutoConfigurationTest::class.java),
-                    emptyArray(),
-                    context as ConfigurableApplicationContext,
-                    Duration.ofMillis(500L)
-                )
-                context.publishEvent(applicationReadyEvent)
+                publishEvent(context)
 
                 assertThat(context).hasSingleBean(DocAggregatorClient::class.java)
                 mockServer.verify()
             }
     }
+
+    private fun publishEvent(context: AssertableApplicationContext) {
+        val applicationReadyEvent = ApplicationReadyEvent(
+            SpringApplication(DocAggregatorAutoConfigurationTest::class.java),
+            emptyArray(),
+            context as ConfigurableApplicationContext,
+            Duration.ofMillis(500L)
+        )
+        context.publishEvent(applicationReadyEvent)
+    }
+
+    private fun withContextRunner(): ApplicationContextRunner = ApplicationContextRunner()
+        .withConfiguration(AutoConfigurations.of(DocAggregatorAutoConfiguration::class.java))
+        .withInitializer(ConditionEvaluationReportLoggingListener.forLogLevel(LogLevel.INFO))
 
     @Configuration(proxyBeanMethods = false)
     class UserConfiguration {
@@ -103,6 +107,10 @@ class DocAggregatorAutoConfigurationTest {
 
             mockServer = MockRestServiceServer.bindTo(restClientBuilder).build()
             return restClientBuilder
+        }
+
+        @Bean
+        fun authorizedClientServiceOAuth2AuthorizedClientManager() = mock<AuthorizedClientServiceOAuth2AuthorizedClientManager> {
         }
     }
 }
